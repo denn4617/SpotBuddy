@@ -26,21 +26,26 @@ export default function App() {
         screenOptions={({ route }) => ({
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
+            let iconSize;
 
             switch (route.name) {
               case "Home":
                 iconName = focused ? "ios-home" : "ios-home-outline";
+                size = focused ? 30 : size;
                 break;
               case "Notifications":
                 iconName = focused
                   ? "ios-notifications-circle"
                   : "ios-notifications-circle-outline";
+                  size = focused ? 30 : size;
                 break;
               case "Settings":
                 iconName = focused ? "ios-settings" : "ios-settings-outline";
+                size = focused ? 30 : size;
                 break;
               case "Login":
                 iconName = focused ? "ios-sad" : "ios-sad-outline";
+                size = focused ? 30 : size;
                 break;
               default:
                 break;
@@ -51,8 +56,12 @@ export default function App() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: "green",
-          inactiveTintColor: "gray",
+          activeTintColor: "white",
+          inactiveTintColor: "white",
+          allowFontScaling: true,
+          style: {
+            backgroundColor: "green",
+          },
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />

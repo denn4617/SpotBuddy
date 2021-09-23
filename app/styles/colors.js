@@ -1,5 +1,6 @@
 export const background = {
   backgroundColor: "#FAFAFA",
+  backgroundColorGreen: "green",
 };
 
 export const textInput = {
