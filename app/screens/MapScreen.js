@@ -1,21 +1,14 @@
 import React from "react";
 import MapView from "react-native-maps";
 import { Location, Permissions } from "expo";
-import { View, Text, StyleSheet, Dimensions, Button } from "react-native";
+import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { Component } from "react";
 
-const NotificationScreen = () => {
+const MapScreen = () => {
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-      <MapView
-        style={styles.map}
-      // region={{
-      //   latitude: 37.78,
-      //   longitude: -122.43,
-      //   latitudeDelta: 0.015,
-      //   longitudeDelta: 0.0121,
-      // }}
-      >
+      <MapView style={styles.map}>
+
         <MapView.Marker
           key={2}
           coordinate={{ latitude: 57.035017, longitude: 9.946407 }}
@@ -24,8 +17,10 @@ const NotificationScreen = () => {
         />
 
       </MapView>
-
-      <Text>Notification Screen</Text>
+      <TouchableOpacity style={styles.overlay}>
+        <Text style={styles.text}>Touchable Opacity</Text>
+      </TouchableOpacity>
+      <Text>Map Screen</Text>
     </View>
   );
 };
@@ -40,5 +35,10 @@ const styles = StyleSheet.create({
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
   },
+  overlay: {
+    position: 'absolute',
+    bottom: 50,
+    backgroundColor: 'rgba(255, 255, 255, 1)',
+  },
 });
-export default NotificationScreen;
+export default MapScreen;

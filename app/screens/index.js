@@ -1,6 +1,6 @@
 import HomeScreen from "./HomeScreen";
-import NotificationScreen from "./NotificationScreen";
+import MapScreen from "./MapScreen";
 import SettingsScreen from "./SettingsScreen";
 import LoginScreen from "./LoginScreen";
 
-export { HomeScreen, NotificationScreen, SettingsScreen, LoginScreen };
+export { HomeScreen, MapScreen, SettingsScreen, LoginScreen };

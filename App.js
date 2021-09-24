@@ -8,14 +8,14 @@ import { Colors } from "./app/styles";
 // få lige fikset ./screens/index.js så components kan importeres nemmere og pænere
 import {
   HomeScreen,
-  NotificationScreen,
+  MapScreen,
   SettingsScreen,
   LoginScreen,
 } from "./app/screens";
 
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//Ionicons - https://oblador.github.io/react-native-vector-icons/
-//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// Ionicons - https://oblador.github.io/react-native-vector-icons/ //
+//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 const Tab = createBottomTabNavigator();
 
@@ -30,21 +30,21 @@ export default function App() {
 
             switch (route.name) {
               case "Home":
-                iconName = focused ? "ios-home" : "ios-home-outline";
+                iconName = focused ? "home" : "home-outline";
                 size = focused ? 30 : size;
                 break;
-              case "Notifications":
+              case "Map":
                 iconName = focused
-                  ? "ios-notifications-circle"
-                  : "ios-notifications-circle-outline";
+                  ? "location"
+                  : "location-outline";
                   size = focused ? 30 : size;
                 break;
               case "Settings":
-                iconName = focused ? "ios-settings" : "ios-settings-outline";
+                iconName = focused ? "settings" : "settings-outline";
                 size = focused ? 30 : size;
                 break;
               case "Login":
-                iconName = focused ? "ios-sad" : "ios-sad-outline";
+                iconName = focused ? "sad" : "sad-outline";
                 size = focused ? 30 : size;
                 break;
               default:
@@ -65,7 +65,7 @@ export default function App() {
         }}
       >
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Notifications" component={NotificationScreen} />
+        <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
         <Tab.Screen name="Login" component={LoginScreen} />
       </Tab.Navigator>

@@ -26,7 +26,7 @@ const LoginScreen = ({ navigation }) => {
           </Text>
         </TouchableOpacity>
         <Button
-          title="Sign up"
+          title="Sign up" 
           color="green"
           onPress={() => navigation.navigate("Settings")}
         />
