@@ -31,7 +31,7 @@ class InternalServerError(Exception):
 
 class DBHandler():
     connection = None
-    def connect(self):
+    def __init__(self):
         try:
             params = config()
             self.connection = psycopg2.connect(**params)
@@ -54,11 +54,11 @@ class DBHandler():
 
     def get_all_users(self):
         self.cursor.execute("SELECT * FROM user_table")
-        return json.dumps(self.cursor.fetchall(), default=str)
+        return self.cursor.fetchall()
     
     def get_user_by_id(self,id):
         self.cursor.execute("SELECT * FROM user_table WHERE user_id = %s", (id,))
-        return json.dumps(self.cursor.fetchone())
+        return self.cursor.fetchone()
 
     def get_all_following(self,id):
         self.cursor.execute("""
@@ -66,11 +66,11 @@ class DBHandler():
         FROM user_table JOIN following_table
         ON user_table.user_id = following_table.followee_id
         WHERE follower_id = %s""", (id,))
-        return json.dumps(self.cursor.fetchall())
+        return self.cursor.fetchall()
 
     def get_all_spots_from_id(self,id):
         self.cursor.execute("SELECT * FROM spit WHERE user_id = %s", (id,))
-        return json.dumps(self.cursor.fetchall())
+        return self.cursor.fetchall()
 
     # TODO: Debate wether this should just be ID, or all
     def get_all_spots_by_tag(self, tag_name):
@@ -80,11 +80,11 @@ class DBHandler():
         ON spot.spot_id = spot_tags_relation.spot_id
         WHERE tag_name = %s
         """, (tag_name, ))
-        return json.dumps(self.cursor.fetchall())
+        return self.cursor.fetchall()
 
     def get_reviews_from_user(self, id):
         self.cursor.execute("SELECT * FROM review WHERE user_id = %s", (id,))
-        return json.dumps(self.cursor.fetchall())
+        return self.cursor.fetchall()
 
 def some_function(id: int=666):
     return {"Message": f"This is a test/placeholder function id: {id}"}
@@ -97,8 +97,3 @@ def login():
 def register():
     pass
 
-
-handler = DBHandler()
-handler.connect()
-print(handler.get_all_users())
-handler.disconnect()

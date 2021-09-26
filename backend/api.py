@@ -13,11 +13,13 @@
 from flask import Flask, jsonify, abort
 from flask_restful import Api, Resource
 
-from backend.db import NotFoundError, NotAuthorizedError, InternalServerError, login, some_function
+from db import *
 
 app = Flask(__name__)
 api = Api(app)
 
+
+db_handler = DBHandler();
 
 class LoginApi(Resource):
     def get(self):
@@ -49,7 +51,7 @@ class UsersApi(Resource):
     def get(self):
         try:
             # get request to return list of users, should 'search' be implemented in conjunction with this?
-            return jsonify(some_function())
+            return jsonify((db_handler.get_all_users()))
         except NotFoundError:
             abort(404, description="Resource not found")
         except NotAuthorizedError:
@@ -62,7 +64,7 @@ class UserApi(Resource):
     def get(self, user_id):
         try:
             # get request to get a single user, as user_id is listed as an argument the id of the user is in the URL. is this right?
-            return jsonify(some_function(user_id))
+            return jsonify(db_handler.get_user_by_id(user_id))
         except NotFoundError:
             abort(404, description="Resource not found")
         except NotAuthorizedError:
