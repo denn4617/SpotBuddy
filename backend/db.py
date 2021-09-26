@@ -64,6 +64,32 @@ class DBHandler():
         self.cursor.execute("SELECT * FROM user_table WHERE user_id = %s", (id,))
         return self.cursor.fetchone()
 
+    def get_all_following(self,id):
+        self.cursor.execute("""
+        SELECT username, user_id 
+        FROM user_table JOIN following_table
+        ON user_table.user_id = following_table.followee_id
+        WHERE follower_id = %s""", (id,))
+        return self.cursor.fetchall()
+
+    def get_all_spots_from_id(self,id):
+        self.cursor.execute("SELECT * FROM spit WHERE user_id = %s", (id,))
+        return self.cursor.fetchall()
+
+    # TODO: Debate wether this should just be ID, or all
+    def get_all_spots_by_tag(self, tag_name):
+        self.cursor.execute("""
+        SELECT spot.spot_id FROM spot
+        JOIN spot_tags_relation
+        ON spot.spot_id = spot_tags_relation.spot_id
+        WHERE tag_name = %s
+        """, (tag_name, ))
+        return self.cursor.fetchall()
+
+    def get_reviews_from_user(self, id):
+        self.cursor.execute("SELECT * FROM review WHERE user_id = %s", (id,))
+        return self.cursor.fetchall()
+
 def some_function(id: int=666):
     return {"Message": f"This is a test/placeholder function id: {id}"}
 
@@ -78,5 +104,5 @@ def register():
 
 hander = DBHandler()
 hander.connect()
-print(hander.get_user_by_id(1))
+print(hander.get_all_spots_by_tag("Urban"))
 hander.disconnect()
