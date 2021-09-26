@@ -1,3 +1,4 @@
+#Expo
 node_modules/
 .expo/
 npm-debug.*
@@ -8,7 +9,10 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+
+# Python
 __pycache__
+database.ini
 
 # macOS
 .DS_Store

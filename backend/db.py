@@ -96,7 +96,7 @@ def register():
     pass
 
 
-hander = DBHandler()
-hander.connect()
-print(hander.get_all_spots_by_tag("Urban"))
-hander.disconnect()
+handler = DBHandler()
+handler.connect()
+print(handler.get_all_spots_by_tag("Urban"))
+handler.disconnect()
