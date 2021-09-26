@@ -14,5 +14,23 @@ web-build/
 __pycache__
 database.ini
 
+# IntelliJ/PyCharm
+build/
+.idea
+.gradle
+local.properties
+*.iml
+
+# VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# .vs? Someone using Visual Studio?
+.vs/
+
 # macOS
 .DS_Store
