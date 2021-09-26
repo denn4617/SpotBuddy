@@ -38,13 +38,7 @@ class DBHandler():
         except (Exception) as error:
             print(error)
             self.disconnect()
-
-#         finally:
-#             if (self.connection):
-#                 self.cursor.close()
-#                 self.connection.close()
-#                 print("PostgreConnection Closed")
-# 
+            
     def disconnect(self):
         if(self.connection):
             self.cursor.close()
