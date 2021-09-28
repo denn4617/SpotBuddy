@@ -34,7 +34,7 @@ class InternalServerError(Exception):
 
 class DBHandler():
     connection = None
-
+    cursor = None
     def connect(self):
         try:
             params = config()
@@ -175,9 +175,10 @@ def register():
 
 
 handler = DBHandler()
-pprint(handler.get_all_users())
-pprint(handler.get_user_by_id(1))
-pprint(handler.get_all_following(1))
-pprint(handler.get_all_spots_from_id(1))
-pprint(handler.get_all_spots_by_tag("Urban"))
-pprint(handler.get_reviews_from_user(1))
+
+# pprint(handler.get_all_users())
+# pprint(handler.get_user_by_id(1))
+# pprint(handler.get_all_following(1))
+# pprint(handler.get_all_spots_from_id(1))
+# pprint(handler.get_all_spots_by_tag("Urban"))
+# pprint(handler.get_reviews_from_user(1))
