@@ -82,9 +82,16 @@ class DBHandler():
         res = self.cursor.fetchall()
         return res
 
-    def get_all_spots_from_id(self, id):
+    def get_all_spots_from_user_id(self, id):
         self.connect()
         self.cursor.execute("SELECT * FROM spot WHERE user_id = %s", (id,))
+        res = self.cursor.fetchall()
+        self.disconnect()
+        return res
+
+    def get_all_spots_from_spot_id(self, id):
+        self.connect()
+        self.cursor.execute("SELECT * FROM spot WHERE spot_id = %s", (id,))
         res = self.cursor.fetchall()
         self.disconnect()
         return res

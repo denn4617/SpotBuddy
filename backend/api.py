@@ -97,6 +97,17 @@ class UserApi(Resource):
         except InternalServerError:
             abort(500, "How did you fuck this up..")
 
+class UserSpotAPI(Resource):
+    def get(self, user_id):
+        try:
+            return jsonify(db_handler.get_all_spots_from_user_id(user_id))
+        except NotFoundError:
+            abort(404, description="Resource not found")
+        except NotAuthorizedError:
+            abort(403, description="Access denied")
+        except InternalServerError:
+            abort(500, "Bruh")
+
 class SpotsAPI(Resource):
     def get(self):
         try:
@@ -108,12 +119,30 @@ class SpotsAPI(Resource):
         except InternalServerError:
             abort(500, "Bruh")
 
+class SpotAPI(Resource):
+    def get(self, spot_id):
+        try:
+            return jsonify(db_handler.get_all_spots_from_spot_id(spot_id))
+        except NotFoundError:
+            abort(404, description="Resource not found")
+        except NotAuthorizedError:
+            abort(403, description="Access denied")
+        except InternalServerError:
+            abort(500, "Bruh")
+
+
+
+
 """ Setup for Api resource routing """
 api.add_resource(LoginApi, '/api/login')
 api.add_resource(RegisterApi, '/api/register')
 api.add_resource(UsersApi, '/api/users')
 api.add_resource(UserApi, '/api/users/<user_id>')
+api.add_resource(UserSpotAPI, '/api/users/spots/<user_id>')
 api.add_resource(SpotsAPI, "/api/spots")
+api.add_resource(SpotAPI, "/api/spots/<spot_id>")
+
+
 # api.add_resource(User, '/api/users/<user_id>')
 
 
