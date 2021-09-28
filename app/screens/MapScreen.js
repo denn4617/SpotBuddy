@@ -4,10 +4,17 @@ import { Location, Permissions } from "expo";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
 import { Component } from "react";
 
+
 const MapScreen = () => {
+  let dataSpots;
+  fetch('http://localhost/api/spots')
+    .then(response => response.json())
+    .then(data => dataSpots = data);
+
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
       <MapView style={styles.map}>
+
 
         <MapView.Marker
           key={2}
@@ -16,7 +23,17 @@ const MapScreen = () => {
           description={"test descrip"}
         />
 
+        {dataSpots => (
+          <Marker
+            key={index}
+            coordinate={marker.latlng}
+            title={marker.title}
+            description={marker.description}
+          />
+        )}
+
       </MapView>
+
       <TouchableOpacity style={styles.overlay}>
         <Text style={styles.text}>Touchable Opacity</Text>
       </TouchableOpacity>
