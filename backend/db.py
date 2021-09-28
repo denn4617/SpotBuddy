@@ -82,9 +82,16 @@ class DBHandler():
         res = self.cursor.fetchall()
         return res
 
-    def get_all_spots_from_id(self, id):
+    def get_all_spots_from_user_id(self, id):
         self.connect()
         self.cursor.execute("SELECT * FROM spot WHERE user_id = %s", (id,))
+        res = self.cursor.fetchall()
+        self.disconnect()
+        return res
+
+    def get_all_spots_from_spot_id(self, id):
+        self.connect()
+        self.cursor.execute("SELECT * FROM spot WHERE spot_id = %s", (id,))
         res = self.cursor.fetchall()
         self.disconnect()
         return res
@@ -98,6 +105,15 @@ class DBHandler():
             ON spot.spot_id = spot_tags_relation.spot_id
             WHERE tag_name = %s
         """, (tag_name, ))
+        res = self.cursor.fetchall()
+        self.disconnect()
+        return res
+
+    def get_all_spots(self):
+        self.connect()
+        self.cursor.execute("""
+            SELECT * FROM spot
+                """)
         res = self.cursor.fetchall()
         self.disconnect()
         return res
@@ -175,10 +191,10 @@ def register():
 
 
 handler = DBHandler()
-
-# pprint(handler.get_all_users())
-# pprint(handler.get_user_by_id(1))
-# pprint(handler.get_all_following(1))
-# pprint(handler.get_all_spots_from_id(1))
-# pprint(handler.get_all_spots_by_tag("Urban"))
-# pprint(handler.get_reviews_from_user(1))
+if __name__ == "__main__":
+    pprint(handler.get_all_users())
+    pprint(handler.get_user_by_id(1))
+    pprint(handler.get_all_following(1))
+    pprint(handler.get_all_spots_from_id(1))
+    pprint(handler.get_all_spots_by_tag("Urban"))
+    pprint(handler.get_reviews_from_user(1))
