@@ -102,6 +102,15 @@ class DBHandler():
         self.disconnect()
         return res
 
+    def get_all_spots(self):
+        self.connect()
+        self.cursor.execute("""
+            SELECT * FROM spot
+                """)
+        res = self.cursor.fetchall()
+        self.disconnect()
+        return res
+
     def get_reviews_from_user(self, id):
         self.connect()
         self.cursor.execute("SELECT * FROM review WHERE user_id = %s", (id,))

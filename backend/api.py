@@ -10,8 +10,10 @@
 /api/get_foxy_image
 
 """
+from db import InternalServerError, NotAuthorizedError, NotFoundError
 from flask import Flask, jsonify, abort
 from flask_restful import Api, Resource
+import simplejson
 
 from db import *
 
@@ -84,12 +86,23 @@ class UserApi(Resource):
         except InternalServerError:
             abort(500, "How did you fuck this up..")
 
+class SpotsAPI(Resource):
+    def get(self):
+        try:
+            return jsonify(simplejson.dumps(db_handler.get_all_spots(), use_decimal = True))
+        except NotFoundError:
+            abort(404, description="Resource not found")
+        except NotAuthorizedError:
+            abort(403, description="Access denied")
+        except InternalServerError:
+            abort(500, "Bruh")
 
 """ Setup for Api resource routing """
 api.add_resource(LoginApi, '/api/login')
 api.add_resource(RegisterApi, '/api/register')
 api.add_resource(UsersApi, '/api/users')
 api.add_resource(UserApi, '/api/users/<user_id>')
+api.add_resource(SpotsAPI, "/api/spots")
 # api.add_resource(User, '/api/users/<user_id>')
 
 
