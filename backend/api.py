@@ -10,9 +10,11 @@
 /api/get_foxy_image
 
 """
+from flask.json import JSONEncoder
 from db import InternalServerError, NotAuthorizedError, NotFoundError
 from flask import Flask, jsonify, abort
 from flask_restful import Api, Resource
+import decimal
 import simplejson
 
 from db import *
@@ -22,6 +24,15 @@ api = Api(app)
 
 
 db_handler = DBHandler();
+
+# For fixing JSON errors
+class DecimalEncoder(JSONEncoder):
+    def default(self, o):
+        if isinstance(o, decimal.Decimal):
+            return str(o)
+        return super(DecimalEncoder, self).default(o)
+
+app.json_encoder = DecimalEncoder
 
 class LoginApi(Resource):
     def get(self):
@@ -89,7 +100,7 @@ class UserApi(Resource):
 class SpotsAPI(Resource):
     def get(self):
         try:
-            return jsonify(simplejson.dumps(db_handler.get_all_spots(), use_decimal = True))
+            return jsonify(db_handler.get_all_spots())
         except NotFoundError:
             abort(404, description="Resource not found")
         except NotAuthorizedError:
