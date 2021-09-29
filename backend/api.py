@@ -15,8 +15,6 @@ from db import InternalServerError, NotAuthorizedError, NotFoundError
 from flask import Flask, jsonify, abort
 from flask_restful import Api, Resource
 import decimal
-import simplejson
-
 from db import *
 
 app = Flask(__name__)
@@ -147,4 +145,4 @@ api.add_resource(SpotAPI, "/api/spots/<spot_id>")
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host = "192.168.0.107")
