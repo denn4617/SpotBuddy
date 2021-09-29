@@ -11,6 +11,7 @@ import {
   MapScreen,
   SettingsScreen,
   LoginScreen,
+  UsersScreen,
 } from "./app/screens";
 
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -47,6 +48,9 @@ export default function App() {
                 iconName = focused ? "sad" : "sad-outline";
                 size = focused ? 30 : size;
                 break;
+              case "Users":
+                iconName = focused ? "people-sharp" : "people-outline";
+                size = focused ? 30 : size;
               default:
                 break;
             }
@@ -68,6 +72,7 @@ export default function App() {
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
         <Tab.Screen name="Login" component={LoginScreen} />
+        <Tab.Screen name="Users" component={UsersScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

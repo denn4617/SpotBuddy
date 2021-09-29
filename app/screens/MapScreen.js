@@ -9,10 +9,12 @@ import { Component } from "react";
 
 const MapScreen = () => {
   const [markers, setMarkers] = useState([])
+  const [latitude, setLatitude] = useState(57.050528)
+  const [longitude, setLongitude] = useState(9.912972)
 
   getSpots = async() => {
     try {
-      await axios.get("http://87.54.88.57:8008/api/spots")
+      await axios.get("http://172.20.10.7:5000/api/spots")
         .then(response => {
           setMarkers(response.data);
           console.log(response.data);
@@ -37,12 +39,12 @@ const MapScreen = () => {
       <MapView
         style={styles.map}
         showsUserLocation={true}
-        /*initialRegion={{
-          latitude: this.state.latitude,
-          longitude: this.state.longitude,
+        initialRegion={{
+          latitude: latitude,
+          longitude: longitude,
           latitudeDelta: 0.0462,
           longitudeDelta: 0.0261,
-        }}*/>
+        }}>
 
        {markers.map(marker => {
          return (
@@ -53,12 +55,6 @@ const MapScreen = () => {
           )
           })}
 
-        {/* <MapView.Marker
-          key={2}
-          coordinate={{ latitude: 57.035017, longitude: 9.946407 }}
-          title={"test title"}
-          description={"test descrip"}
-        /> */}
       </MapView>
       <TouchableOpacity style={styles.overlay}>
         <Text style={styles.text}>Touchable Opacity</Text>
