@@ -1,18 +1,22 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import MapView from "react-native-maps";
 import { Location, Permissions } from "expo";
 import { View, Text, StyleSheet, Dimensions, TouchableOpacity } from "react-native";
+import axios from "axios";
 import { Component } from "react";
 
 
-const MapScreen = () => {
 
-  getSpots = () => {
+const MapScreen = () => {
+  const [markers, setMarkers] = useState([])
+
+  getSpots = async() => {
     try {
-      axios.get("localhost:5000/api/spots")
+      await axios.get("http://87.54.88.57:8008/api/spots")
         .then(response => {
-          this.setState({ markers: response });
-          console.log(this.state.markers);
+          setMarkers(response.data);
+          console.log(response.data);
+          console.log("This is the current state: " + markers[0].spot_id);
         })
         .catch(error => {
           console.log('Error fetching and parsing data', error);
@@ -20,7 +24,13 @@ const MapScreen = () => {
     } catch (error) {
       console.log(error);
     }
-  }
+  };
+
+  useEffect(() => {
+    getSpots();
+  }, [])
+
+  
 
   return (
     <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
@@ -34,23 +44,22 @@ const MapScreen = () => {
           longitudeDelta: 0.0261,
         }}*/>
 
-        {this.state.markers.map(marker => (
-          <Marker
-            coordinate={{ latitude: marker.member.latitude, longitude: marker.member.longitude }}
-          />
-        ))}
+       {markers.map(marker => {
+         return (
+            <MapView.Marker
+              key = {marker.spot_id} 
+              coordinate={{ latitude: Number(marker.latitude), longitude: Number(marker.longitude) }} 
+            />
+          )
+          })}
 
-        <MapView.Marker
+        {/* <MapView.Marker
           key={2}
           coordinate={{ latitude: 57.035017, longitude: 9.946407 }}
           title={"test title"}
           description={"test descrip"}
-        />
-
-
-
+        /> */}
       </MapView>
-
       <TouchableOpacity style={styles.overlay}>
         <Text style={styles.text}>Touchable Opacity</Text>
       </TouchableOpacity>
