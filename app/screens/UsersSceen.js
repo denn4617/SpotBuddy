@@ -1,6 +1,6 @@
 import React, {useEffect} from "react";
 import axios from "axios";
-import { Button, View, Text, StyleSheet, Dimensions } from "react-native";
+import { Button, View, Text, StyleSheet, Dimensions, SafeAreaView} from "react-native";
 import { useState } from "react/cjs/react.development";
 import { Buttons } from "../styles";
 
@@ -9,7 +9,7 @@ const UsersScreen = ({ navigation }) => {
 
     const getUsers = async() => {
         try {
-            await axios.get("http://172.20.10.7:5000/api/users")
+            await axios.get("http://10.0.0.12:5000/api/users")
                 .then(response => {
                     setUsers(response.data);
                     console.log(response.data);
@@ -26,7 +26,7 @@ const UsersScreen = ({ navigation }) => {
         getUsers();
     }, [])
     return (
-        <View style={styles.screenContainer}>
+        <SafeAreaView style={styles.screenContainer}>
 
             {users.map(user => {
                 return (
@@ -37,13 +37,13 @@ const UsersScreen = ({ navigation }) => {
             })}
 
 
-        </View>
+        </SafeAreaView>
     );
 };
 const styles = StyleSheet.create({
     screenContainer: {
         flex: 1,
-        justifyContent: "space-between",
+        justifyContent: "flex-start",
         // backgroundColor: "red",
         width: "100%",
         height: "100%",
@@ -51,7 +51,6 @@ const styles = StyleSheet.create({
     },
     userContainer: {
         flex: 0.1,
-        marginTop: 100,
         borderBottomWidth: 1,
         borderTopWidth: 1,
         borderColor: "green",
