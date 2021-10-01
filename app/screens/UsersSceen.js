@@ -1,15 +1,15 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import axios from "axios";
-import { Button, View, Text, StyleSheet, Dimensions, SafeAreaView} from "react-native";
+import { View, Text, StyleSheet, SafeAreaView, FlatList } from "react-native";
 import { useState } from "react/cjs/react.development";
 import { Buttons } from "../styles";
 
 const UsersScreen = ({ navigation }) => {
     const [users, setUsers] = useState([])
 
-    const getUsers = async() => {
+    const getUsers = async () => {
         try {
-            await axios.get("http://10.0.0.12:5000/api/users")
+            await axios.get("http://172.20.10.7:5000/api/users")
                 .then(response => {
                     setUsers(response.data);
                     console.log(response.data);
@@ -25,6 +25,8 @@ const UsersScreen = ({ navigation }) => {
     useEffect(() => {
         getUsers();
     }, [])
+
+
     return (
         <SafeAreaView style={styles.screenContainer}>
 
@@ -35,6 +37,24 @@ const UsersScreen = ({ navigation }) => {
                     </View>
                 )
             })}
+            
+            
+            {/* {users.map(user => {
+                return (
+                    <View >
+                        <FlatList
+                            contentContainerStyle={styles.userContainer}
+                            data={[
+                                { key: user.user_id },
+                            ]}
+                            renderItem={({ user }) => <Text>{user.username}</Text>}
+                            // keyExtractor={userID => user.user_id}
+                        />
+                    </View>
+                )
+            })}  */}
+
+
 
 
         </SafeAreaView>

@@ -14,7 +14,7 @@ const MapScreen = () => {
 
   getSpots = async() => {
     try {
-      await axios.get("http://10.0.0.12:5000/api/spots")
+      await axios.get("http://172.20.10.7:5000/api/spots")
         .then(response => {
           setMarkers(response.data);
           console.log(response.data);
