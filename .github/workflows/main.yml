@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-java@v2.3.1
         with:
           java-version: '9.0.4'
-          java-package: jdk
+          distribution: jdk
           architecture: x64
       - uses: expo/expo-github-action@v5
         with: 
