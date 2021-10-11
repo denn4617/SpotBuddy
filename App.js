@@ -29,31 +29,15 @@ export default function App() {
             let iconName;
             let iconSize;
 
-            switch (route.name) {
-              case "Home":
-                iconName = focused ? "home" : "home-outline";
-                size = focused ? 30 : size;
-                break;
-              case "Map":
-                iconName = focused
-                  ? "location"
-                  : "location-outline";
-                  size = focused ? 30 : size;
-                break;
-              case "Settings":
-                iconName = focused ? "settings" : "settings-outline";
-                size = focused ? 30 : size;
-                break;
-              case "Login":
-                iconName = focused ? "sad" : "sad-outline";
-                size = focused ? 30 : size;
-                break;
-              case "Users":
-                iconName = focused ? "people-sharp" : "people-outline";
-                size = focused ? 30 : size;
-              default:
-                break;
+            var IconName = {
+              Home: "home",
+              Map: "location",
+              Settings: "settings",
+              Login: "sad",
+              Users: "people",
             }
+            size = focused ? 30 : size;
+            iconName = focused ? IconName[route.name] : IconName[route.name].concat("-outline");
 
             // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
