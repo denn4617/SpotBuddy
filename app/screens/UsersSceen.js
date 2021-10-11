@@ -71,8 +71,8 @@ const styles = StyleSheet.create({
     },
     userContainer: {
         flex: 0.1,
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
+        // borderBottomWidth: 1,
+        // borderTopWidth: 1,
         borderColor: "green",
         alignItems: "center",
         justifyContent: "center",
