@@ -19,8 +19,8 @@ We, the devs, simply needed an interesting app to develop in our spare-time
 
 ### **Map Screen**
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-<img src="https://i.imgur.com/Oo1c4JW.png" width="300">
+<img src="https://i.imgur.com/Oo1c4JW.png" width="500">
 
 ### **Login Screen**
 "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
-<img src="https://i.imgur.com/2wH33Dr.png" width="300">
+<img src="https://i.imgur.com/2wH33Dr.png" width="500">
