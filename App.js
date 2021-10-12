@@ -39,7 +39,6 @@ export default function App() {
             size = focused ? 30 : size;
             iconName = focused ? IconName[route.name] : IconName[route.name].concat("-outline");
 
-            // You can return any component that you like here!
             return <Ionicons name={iconName} size={size} color={color} />;
           },
         })}
