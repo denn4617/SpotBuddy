@@ -16,9 +16,9 @@ We, the devs, simply needed an interesting app to develop in our spare-time.
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ## Staff members
-- **@denn4617** a.k.a. dunnis - **CEO**
-- **@cNorspang** a.k.a. NorDspang - **CTO**
-- **@Benno4president** a.k.a. Benno - **CMO**
+- [**@denn4617**](https://github.com/denn4617) a.k.a. dunnis - **CEO**
+- [**@cNorspang**](https://github.com/cNorspang) a.k.a. NorDspang - **CTO**
+- [**@Benno4president**](https://github.com/Benno4president) a.k.a. Benno - **CMO**
 
 ## The App
 
