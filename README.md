@@ -1,10 +1,10 @@
 # SpotBuddy
 A social media platform for sharing beautiful or interesting spots around the world. 
 People can choose to share spots with friends, followers or simply everyone.
-When sharing a spot, users will be prompted to upload an astetic picture and a short description of the place, alongside tags that descripe the physical asptects of the spot
+When sharing a spot, users will be prompted to upload an astetic picture and a short description of the place, alongside tags that descripe the physical asptects of the spot.
 
 ## Motivation
-We, the devs, simply needed an interesting app to develop in our spare-time
+We, the devs, simply needed an interesting app to develop in our spare-time.
 
 ## Tech Stack
 **The app, and backend was build using**
@@ -14,6 +14,11 @@ We, the devs, simply needed an interesting app to develop in our spare-time
 
 ## Licese
 [MIT](https://choosealicense.com/licenses/mit/)
+
+## Staff members
+- **@denn4617** a.k.a. dunnis - **CEO**
+- **@cNorspang** a.k.a. NorDspang - **CTO**
+- **@Benno4president** a.k.a. Benno - **CMO**
 
 ## The App
 
