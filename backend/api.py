@@ -10,18 +10,49 @@
 /api/get_foxy_image
 
 """
+
+# ============ LOOK AT DB2 IF YOU FORGET WHERE YOU WERE ======= #
+
+import re
 from flask.json import JSONEncoder
 from db import InternalServerError, NotAuthorizedError, NotFoundError
-from flask import Flask, jsonify, abort
-from flask_restful import Api, Resource
+from flask import Flask, jsonify, abort, request
+from flask_restful import Api, Resource, reqparse
+from flask_sqlalchemy import SQLAlchemy
+import flask_praetorian
+import flask_cors
 import decimal
 from db import *
+from db2 import *
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Postgres@192.168.0.115:5432/postgres"
 api = Api(app)
+guard = flask_praetorian.Praetorian()
+db = SQLAlchemy(app)
 
 
 db_handler = DBHandler();
+
+class UserModel(db.Model):
+    __tablename__ = 'user_table'
+
+    user_id = db.Column(db.Integer, primary_key=True)
+    date_created = db.Column(db.Date())
+    email = db.Column(db.String())
+    username = db.Column(db.String())
+    hashed_pw = db.Column(db.String())
+    picture_link = db.Column(db.String())
+
+    def __init__(self, user_id, date_created, email, username, hashed_pw):
+        self.user_id = user_id
+        self.date_created = date_created
+        self.email = email
+        self.username = username
+        self.hashed_pw = hashed_pw
+
+    def __repr__(self) -> str:
+        return f"<User {self.user_id}>"
 
 # For fixing JSON errors
 class DecimalEncoder(JSONEncoder):
@@ -128,7 +159,16 @@ class SpotAPI(Resource):
         except InternalServerError:
             abort(500, "Bruh")
 
+class TestResource(Resource):
+    def post(self):
+        return postUser(request)
 
+    def get(self):
+        return getUsers()
+
+class TestResource2(Resource):
+    def get (self, name):
+        return getUser(name)
 
 
 """ Setup for Api resource routing """
@@ -139,7 +179,8 @@ api.add_resource(UserApi, '/api/users/<user_id>')
 api.add_resource(UserSpotAPI, '/api/users/spots/<user_id>')
 api.add_resource(SpotsAPI, "/api/spots")
 api.add_resource(SpotAPI, "/api/spots/<spot_id>")
-
+api.add_resource(TestResource, "/api/test/")
+api.add_resource(TestResource2, "/api/test/<name>")
 
 # api.add_resource(User, '/api/users/<user_id>')
 
