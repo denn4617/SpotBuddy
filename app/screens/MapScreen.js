@@ -3,6 +3,8 @@ import MapView from "react-native-maps";
 import { Location, Permissions } from "expo";
 import { View, SafeAreaView, StyleSheet, Dimensions, Button, Alert, TouchableOpacity, Text } from "react-native";
 import axios from "axios";
+import ActionButton from 'react-native-circular-action-menu';
+import { Ionicons } from "@expo/vector-icons";
 import { Component } from "react";
 
 
@@ -59,13 +61,23 @@ const MapScreen = () => {
       <SafeAreaView //overlay button for adding new spots
         style={styles.overlay}
       >
-        <TouchableOpacity style={styles.appButtonContainer}>
-          <Text style={styles.appButtonText}>Add spot</Text>
-        </TouchableOpacity>
+        <ActionButton buttonColor="rgba(231,76,60,1)">
+          <ActionButton.Item buttonColor='#9b59b6' title="New Task" onPress={() => console.log("create tapped!")}>
+            <Ionicons name="create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#3498db' title="Notifications" onPress={() => console.log("notifications tapped!")}>
+            <Ionicons name="notifications" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+          <ActionButton.Item buttonColor='#1abc9c' title="All Tasks" onPress={() => console.log("sad tapped!")}>
+            <Ionicons name="sad" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
       </SafeAreaView>
     </View>
   );
 };
+export default MapScreen;
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -79,7 +91,8 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: 'absolute',
-    bottom: '4%'
+    bottom: '4%',
+    
 
   },
   appButtonContainer: {
@@ -96,6 +109,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase"
-  }
+  },
+  actionButtonIcon: {
+    fontSize: 20,
+    height: 22,
+    color: 'white',
+  },
 });
-export default MapScreen;
+
