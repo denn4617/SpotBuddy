@@ -1,39 +1,53 @@
+from datetime import datetime
 from flask.json import jsonify
-from api import app
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
 
 
-db = SQLAlchemy(app)
+db = SQLAlchemy()
 
 class UserModel(db.Model):
     __tablename__ = 'user_table'
 
     user_id = db.Column(db.Integer, primary_key=True)
-    date_created = db.Column(db.Date())
+    date_created = db.Column(db.DateTime(), default=func.now())
     email = db.Column(db.String())
     username = db.Column(db.String())
-    hashed_pw = db.Column(db.String())
+    roles = db.Column(db.Text)
+    password = db.Column(db.String())
     picture_link = db.Column(db.String())
-
-    def __init__(self, user_id, date_created, email, username, hashed_pw):
-        self.user_id = user_id
-        self.date_created = date_created
-        self.email = email
-        self.username = username
-        self.hashed_pw = hashed_pw
 
     def __repr__(self) -> str:
         return f"<User {self.user_id}>"
+
+    @classmethod
+    def lookup(cls, username):
+        return cls.query.filter_by(username = username).one_or_none()
+
+    @classmethod
+    def identify(cls, id):
+        return cls.qurey.get(id)
+
+    @property
+    def rolenames(self):
+        try:
+            return self.roles.split(',')
+        except Exception:
+            return  []
+
+    @property
+    def identity(self):
+        return self.user_id
 
 def postUser(request):
     if request.is_json:
             data = request.get_json()
             new_user = UserModel(
                 user_id=data['user_id'], 
-                date_created="01-01-2001", 
+                date_created=datetime.now(), 
                 email=data['email'],
                 username=data['username'],
-                hashed_pw=data['hashed_pw']
+                password=data['password']
                 )
 
             db.session.add(new_user)
@@ -51,7 +65,7 @@ def getUsers():
             "date_created" : str(user.date_created), 
             "email" : user.email,
             "username" : user.username,
-            "hashed_pw" : user.hashed_pw
+            "password" : user.password
         } for user in users
     ]
     
@@ -64,5 +78,5 @@ def getUser(name):
         "date_created" : str(user.date_created), 
         "email" : user.email,
         "username" : user.username,
-        "hashed_pw" : user.hashed_pw
+        "password" : user.password
     }
