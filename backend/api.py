@@ -24,6 +24,7 @@ import flask_cors
 import decimal
 from db import *
 from db2 import UserModel, getUser, getUsers, postUser
+from flasgger import Swagger
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Postgres@192.168.0.115:5432/postgres"
@@ -35,7 +36,7 @@ api = Api(app)
 guard = flask_praetorian.Praetorian()
 guard.init_app(app, UserModel)
 db = SQLAlchemy(app)
-
+swagger = Swagger(app)
 
 db_handler = DBHandler();
 
@@ -60,7 +61,11 @@ with app.app_context():
         db.session.commit()
 
 class LoginApi(Resource):
+    
     def post(self):
+        """
+        file: api_documentation/login_api_post.yml
+        """
         req = request.get_json(force=True)
         username = req.get('username', None)
         password = req.get('password', None)

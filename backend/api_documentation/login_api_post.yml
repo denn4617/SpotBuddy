@@ -1,0 +1,17 @@
+Returns a JWT for authenticating the user logging in.
+---
+tags:
+  - restful
+parameters:
+  - in: body
+    name: body
+    schema:
+      username: "username"
+      password: "password"
+    required: true
+    description: Username of user that wants to login
+responses:
+  200:
+    description: The JWT for the user
+    schema:
+        access_token: Token
