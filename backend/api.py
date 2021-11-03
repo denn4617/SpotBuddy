@@ -10,15 +10,31 @@
 /api/get_foxy_image
 
 """
+
+# ============ LOOK AT DB2 IF YOU FORGET WHERE YOU WERE ======= #
+
+import re
 from flask.json import JSONEncoder
 from db import InternalServerError, NotAuthorizedError, NotFoundError
-from flask import Flask, jsonify, abort
-from flask_restful import Api, Resource
+from flask import Flask, jsonify, abort, request
+from flask_restful import Api, Resource, reqparse
+from flask_sqlalchemy import SQLAlchemy
+import flask_praetorian
+import flask_cors
 import decimal
 from db import *
+from db2 import UserModel, getUser, getUsers, postUser
 
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Postgres@192.168.0.115:5432/postgres"
+app.config['SECRET_KEY'] = 'SuperSecretKey'
+app.config['JWT_ACCESS_LIFESPAN'] = {'hours': 24}
+app.config['JWT_REFRESH_LIFESPAN'] = {'days': 30}
+
 api = Api(app)
+guard = flask_praetorian.Praetorian()
+guard.init_app(app, UserModel)
+db = SQLAlchemy(app)
 
 
 db_handler = DBHandler();
@@ -32,7 +48,27 @@ class DecimalEncoder(JSONEncoder):
 
 app.json_encoder = DecimalEncoder
 
+with app.app_context():
+    db.create_all()
+    if db.session.query(UserModel).filter_by(username='Tester').count() < 1:
+        db.session.add(UserModel(
+            username='Tester',
+            email = 'tester@tester.com',
+            password=guard.hash_password('Tester'),
+            roles='admin'
+        ))
+        db.session.commit()
+
 class LoginApi(Resource):
+    def post(self):
+        req = request.get_json(force=True)
+        username = req.get('username', None)
+        password = req.get('password', None)
+        user = guard.authenticate(username, password)
+        ret = {'access_token': guard.encode_jwt_token(user)}
+        return ret,200
+
+
     def get(self):
         try:
             # validate login.. requires more research
@@ -44,18 +80,26 @@ class LoginApi(Resource):
         except InternalServerError:
             abort(500, "How did you fuck this up..")
 
+class RefreshApi(Resource):
+    def post(self):
+        old_token = request.get_data()
+        new_token = guard.refresh_jwt_token(old_token)
+        ret = {'access_token': new_token}
+        return ret, 200
 
 class RegisterApi(Resource):
-    def put(self):
-        try:
-            # put request to add a new user
-            return jsonify(some_function())
-        except NotFoundError:
-            abort(404, description="Resource not found")
-        except NotAuthorizedError:
-            abort(403, description="Access denied")
-        except InternalServerError:
-            abort(500, "How did you fuck this up..")
+    def post(self):
+        req = request.get_json()
+        username = req.get('username', None)
+        password = req.get('password', None)
+        email = req.get('email', None)
+        db.session.add(UserModel(
+            username=username,
+            email = email,
+            password=guard.hash_password(password),
+            roles=''
+        ))
+        db.session.commit()
 
 
 class UsersApi(Resource):
@@ -107,6 +151,7 @@ class UserSpotAPI(Resource):
             abort(500, "Bruh")
 
 class SpotsAPI(Resource):
+    @flask_praetorian.auth_required
     def get(self):
         try:
             return jsonify(db_handler.get_all_spots())
@@ -129,8 +174,6 @@ class SpotAPI(Resource):
             abort(500, "Bruh")
 
 
-
-
 """ Setup for Api resource routing """
 api.add_resource(LoginApi, '/api/login')
 api.add_resource(RegisterApi, '/api/register')
@@ -139,7 +182,6 @@ api.add_resource(UserApi, '/api/users/<user_id>')
 api.add_resource(UserSpotAPI, '/api/users/spots/<user_id>')
 api.add_resource(SpotsAPI, "/api/spots")
 api.add_resource(SpotAPI, "/api/spots/<spot_id>")
-
 
 # api.add_resource(User, '/api/users/<user_id>')
 
