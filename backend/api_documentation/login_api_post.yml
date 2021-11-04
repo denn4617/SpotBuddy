@@ -6,12 +6,25 @@ parameters:
   - in: body
     name: body
     schema:
-      username: "username"
-      password: "password"
+      id: Login
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          description: Your username
+        password:
+          type: string
+          description: Your password
     required: true
     description: Username of user that wants to login
 responses:
   200:
     description: The JWT for the user
     schema:
-        access_token: Token
+      id: access_token
+      properties:
+        token: 
+          type: string
+          description: The users JWT
