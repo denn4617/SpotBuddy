@@ -1,0 +1,15 @@
+returns a list of all spots the user can access.
+---
+tags:
+  - restful
+parameters:
+  - name: Authorization
+    in: header
+    description: JWT to be passed in the auth header
+    required: true
+    type: string
+responses:
+  200:
+    description: A list of all spots
+    schema: 
+      $ref: '#/desciptions/spots.json'

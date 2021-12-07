@@ -1,0 +1,101 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "title": "The root schema",
+    "description": "The root schema comprises the entire JSON document.",
+    "default": {},
+    "examples": [
+        {
+            "img_link": null,
+            "is_private": false,
+            "latitude": "57.032110",
+            "longitude": "9.936150",
+            "spot_id": 3,
+            "trash_cans": null,
+            "user_id": 2
+        }
+    ],
+    "required": [
+        "img_link",
+        "is_private",
+        "latitude",
+        "longitude",
+        "spot_id",
+        "trash_cans",
+        "user_id"
+    ],
+    "properties": {
+        "img_link": {
+            "$id": "#/properties/img_link",
+            "type": "null",
+            "title": "The img_link schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": null,
+            "examples": [
+                null
+            ]
+        },
+        "is_private": {
+            "$id": "#/properties/is_private",
+            "type": "boolean",
+            "title": "The is_private schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": false,
+            "examples": [
+                false
+            ]
+        },
+        "latitude": {
+            "$id": "#/properties/latitude",
+            "type": "string",
+            "title": "The latitude schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "57.032110"
+            ]
+        },
+        "longitude": {
+            "$id": "#/properties/longitude",
+            "type": "string",
+            "title": "The longitude schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "9.936150"
+            ]
+        },
+        "spot_id": {
+            "$id": "#/properties/spot_id",
+            "type": "integer",
+            "title": "The spot_id schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                3
+            ]
+        },
+        "trash_cans": {
+            "$id": "#/properties/trash_cans",
+            "type": "null",
+            "title": "The trash_cans schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": null,
+            "examples": [
+                null
+            ]
+        },
+        "user_id": {
+            "$id": "#/properties/user_id",
+            "type": "integer",
+            "title": "The user_id schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0,
+            "examples": [
+                2
+            ]
+        }
+    },
+    "additionalProperties": true
+}

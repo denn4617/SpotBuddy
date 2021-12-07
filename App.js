@@ -3,6 +3,7 @@ import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
+import {createStackNavigator} from '@react-navigation/stack';
 
 import { Colors } from "./app/styles";
 // få lige fikset ./screens/index.js så components kan importeres nemmere og pænere
@@ -19,6 +20,17 @@ import {
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 const Tab = createBottomTabNavigator();
+
+const Auth = () => {
+  return(
+    <Stack.Navigator initialRouteName="Login">
+      <Stack.Screen
+       name="Login"
+       component={LoginScreen}
+       options={{headerShown: false}}/>
+    </Stack.Navigator>
+  )
+}
 
 export default function App() {
   return (
@@ -50,11 +62,12 @@ export default function App() {
             backgroundColor: "green",
           },
         }}
+        initialRouteName="Login"
       >
         <Tab.Screen name="Home" component={HomeScreen} />
         <Tab.Screen name="Map" component={MapScreen} />
         <Tab.Screen name="Settings" component={SettingsScreen} />
-        <Tab.Screen name="Login" component={LoginScreen} />
+        <Tab.Screen name="Auth" component={Auth} />
         <Tab.Screen name="Users" component={UsersScreen} />
       </Tab.Navigator>
     </NavigationContainer>

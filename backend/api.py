@@ -15,7 +15,6 @@
 
 import re
 from flask.json import JSONEncoder
-from db import InternalServerError, NotAuthorizedError, NotFoundError
 from flask import Flask, jsonify, abort, request
 from flask_restful import Api, Resource, reqparse
 from flask_sqlalchemy import SQLAlchemy
@@ -24,7 +23,7 @@ import flask_cors
 import decimal
 from db import *
 from db2 import UserModel, getUser, getUsers, postUser
-from flasgger import Swagger
+from flasgger import Swagger, swag_from
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:Postgres@192.168.0.115:5432/postgres"
@@ -39,6 +38,7 @@ db = SQLAlchemy(app)
 swagger = Swagger(app)
 
 db_handler = DBHandler();
+
 
 # For fixing JSON errors
 class DecimalEncoder(JSONEncoder):
@@ -67,8 +67,11 @@ class LoginApi(Resource):
         file: api_documentation/login_api_post.yml
         """
         req = request.get_json(force=True)
+        print(req)
         username = req.get('username', None)
         password = req.get('password', None)
+        username = username.get('username', None)
+        password = password.get('password', None)
         user = guard.authenticate(username, password)
         ret = {'access_token': guard.encode_jwt_token(user)}
         return ret,200
@@ -157,6 +160,7 @@ class UserSpotAPI(Resource):
 
 class SpotsAPI(Resource):
     @flask_praetorian.auth_required
+    @swag_from('api_documentation/spots_api_get.yml')
     def get(self):
         try:
             return jsonify(db_handler.get_all_spots())
